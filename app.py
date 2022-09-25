@@ -22,12 +22,13 @@
 #  
 #  
 
-from flask import Flask    
+from flask import Flask
+
 app = Flask(__name__)
 
-@app.route('/')      
-def hello():
-    return 'HELLO'
-  
-if __name__=='__main__':
-   app.run(debug = True)
+@app.route("/")
+def index():
+    return "<h1>Hello!</h1>"
+
+def create_app():
+   return app
