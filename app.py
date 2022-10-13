@@ -28,7 +28,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('templates/addnewmaid.html')
+    return render_template('addnewmaid.html')
 
 def create_app():
    return app
