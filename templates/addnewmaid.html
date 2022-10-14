@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>FlaskApp</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/addnewmaid.css') }}">
+  <meta charset="UTF-8">
+  <title>Helper List</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/addnewmaid.css') }}">
 </head>
+
 <body>
-    <h1 class="center">Helpers List</h1>
-    <table style="width:100%">
-        <thead class="center">
-            <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-              </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-              </tr>
-        </tbody>
-      </table>
+  <h1 class="center">Helpers List</h1>
+  <table style="width:100%">
+    <thead class="center">
+      <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Helper's Name</th>
+        <th>Country</th>
+        <th>Date Of Birth</th>
+        <th>Status</th>
+        <th>Arrival Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in listOfHelpers %}
+      <tr>
+        <td>{{e.id}}</td>
+        <td>{{e.code}}</td>
+        <td>{{e.name}}</td>
+        <td>{{e.nationality}}</td>
+        <td>{{e.dob}}</td>
+        <td>{{e.status}}</td>
+        <td>{{e.nationlity}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </body>
+
 </html>
