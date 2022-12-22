@@ -1,0 +1,19 @@
+{% import "navbar.html" as macros %}
+{{macros.build_site_navigation(pages=pages, selected="Del")}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <h1 class="center">Helpers List</h1>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/helpers.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <form action="/delHelper" method="post">
+      <label for="id">ID:</label><br>
+      <input type="number" id="id" name="id"><br>
+      <input type="submit" value="Delete">
+    </form>
+  </div>
+</body>

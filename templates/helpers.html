@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% import "navbar.html" as macros %}
+{{macros.build_site_navigation(pages=pages, selected="HelperList")}}
+
 <head>
   <meta charset="UTF-8">
   <title>Helper List</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/addnewmaid.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/helpers.css') }}">
 </head>
 
 <body>
@@ -18,7 +21,14 @@
         <th>Country</th>
         <th>Date Of Birth</th>
         <th>Status</th>
+        <th>Nationality</th>
+        <th>Flight Number</th>
+        <th>FIN</th>
+        <th>Medical</th>
+        <th>Staff_Id</th>
         <th>Arrival Date</th>
+        <th>Created At</th>
+        <th>Updated At</th>
       </tr>
     </thead>
     <tbody>
@@ -31,6 +41,13 @@
         <td>{{e.dob}}</td>
         <td>{{e.status}}</td>
         <td>{{e.nationlity}}</td>
+        <td>{{e.flightNo}}</td>
+        <td>{{e.fin}}</td>
+        <td>{{e.medical}}</td>
+        <td>{{e.staffId}}</td>
+        <td>{{e.arrviaDate}}</td>
+        <td>{{e.createdAt}}</td>
+        <td>{{e.updatedAt}}</td>
       </tr>
       {% endfor %}
     </tbody>

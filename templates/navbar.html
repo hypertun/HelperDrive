@@ -1,0 +1,7 @@
+{% macro build_site_navigation(pages,selected) %}
+<div class="topnav">
+        {% for page in pages %}
+        <a class="{% if selected == page.name %}active{% endif %}" href="{{page.url}}">{{page.name}}</a>
+        {% endfor %}
+</div>
+{% endmacro %}
