@@ -49,28 +49,36 @@ def index():
     return render_template('helpers.html', listOfHelpers=data, pages=generate_page_list())
 
 
-@app.route("/addEditHelper",defaults={'id': None}, methods=["GET", "POST"])
+@app.route("/addEditHelper", defaults={'id': None}, methods=["GET", "POST"])
 @app.route("/addEditHelper/<id>", methods=["GET", "POST"])
 def addEditHelper(id):
     if request.method == "GET":
         if id is None:
-            return render_template("addEditHelper.html", pages=generate_page_list(),helper=None)
+            return render_template("addEditHelper.html", pages=generate_page_list(), helper=None)
         else:
             conn = mysql.connect()
-            helper = Helper("","","","","","")
+            helper = Helper("", "", "", "", "", "")
             helper.id = id
             fullDetails = helper.get(conn)
             conn.close()
-            return render_template("addEditHelper.html", pages=generate_page_list(),helper=fullDetails)
+            return render_template("addEditHelper.html", pages=generate_page_list(), helper=fullDetails)
     elif request.method == "POST":
         conn = mysql.connect()
-        name, code, status, nationality, medical, staffId, err = validationForAdd(request)
+        name, code, status, nationality, medical, staffId, err = validationForAdd(
+            request)
         id, dob, arrivalDate, flightNo, fin = validationForUpdate(request)
         if not err:
-             helper = addEditHelper(conn,id, name, code, status, nationality, medical,
-                          staffId, dob, arrivalDate, flightNo, fin)
+            if id == "NA":
+                helper = addEditHelper(conn, None, name, code, status, nationality, medical,
+                                       staffId, dob, arrivalDate, flightNo, fin)
+            else:
+                helper = addEditHelper(conn, id, name, code, status, nationality, medical,
+                                       staffId, dob, arrivalDate, flightNo, fin)
+                conn.close()
+                return render_template("addEditHelper.html", pages=generate_page_list(), helper=helper)
         conn.close()
-        return render_template("addEditHelper.html", pages=generate_page_list(),helper=helper)
+        return render_template("addEditHelper.html", pages=generate_page_list(), helper=None)
+        
 
 
 @app.route("/delHelper", methods=["GET", "POST"])
@@ -89,7 +97,7 @@ def create_app():
     return app
 
 
-def addEditHelper(conn,id, name, code, status, nationality, medical, staffId, dob, arrivalDate, flightNo, fin):
+def addEditHelper(conn, id, name, code, status, nationality, medical, staffId, dob, arrivalDate, flightNo, fin):
     newHelper = Helper(name=name, code=code, status=status,
                        nationality=nationality, medical=medical, staff_Id=staffId)
     newHelper.date_of_birth = dob
@@ -98,9 +106,11 @@ def addEditHelper(conn,id, name, code, status, nationality, medical, staffId, do
     newHelper.fin = fin
     if id is None:
         newHelper.add(conn)
+        flash('New Helper Added!')
     else:
         newHelper.id = id
         newHelper.edit(conn)
+        flash('Helper Edited!')
     return newHelper
 
 
@@ -128,7 +138,7 @@ def validationForAdd(request):
     nationality = request.form["nationality"].casefold()
     if not nationality or (nationality != "indonesia" and nationality != "myanmar" and nationality != "philippines"):
         flash('Nationality is required as Indonesia/Myanmar/Philippines!')
-        error = True    
+        error = True
     medical = request.form["medical"].casefold()
     if not medical or (medical != "pass" and medical != "fail"):
         flash('Medical is required as pass/fail!')
@@ -144,15 +154,15 @@ def validationForAdd(request):
 def validationForUpdate(request):
     id = request.form["id"]
     dob = request.form["dob"]
-    if dob is not "":
+    if dob != "":
         dob = datetime.strptime(dob, '%Y-%m-%d')
     arrivalDate = request.form["arrivalDate"]
-    if arrivalDate is not "":
-        arrivalDate = datetime.strptime(arrivalDate,'%Y-%m-%dT%H:%M')
+    if arrivalDate != "":
+        arrivalDate = datetime.strptime(arrivalDate, '%Y-%m-%dT%H:%M')
     flightNo = request.form["flightNo"]
     fin = request.form["fin"]
 
-    return id,dob, arrivalDate, flightNo, fin
+    return id, dob, arrivalDate, flightNo, fin
 
 
 def generate_page_list():

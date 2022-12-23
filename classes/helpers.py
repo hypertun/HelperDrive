@@ -10,12 +10,12 @@ def getAllHelpers(conn):
     for eachHelper in data:
         id, name, code, dob, arrival_Date, flight_No, status, nationality, fin, medical, staff_id, created_at, updated_at = eachHelper
         newHelper = Helper(name,
-                       code,
-                       status,
-                       nationality,
-                       medical,
-                       staff_id,
-                       )
+                           code,
+                           status,
+                           nationality,
+                           medical,
+                           staff_id,
+                           )
         newHelper.id = id
         newHelper.date_of_birth = dob
         newHelper.arrival_date = arrival_Date
@@ -48,7 +48,7 @@ class Helper:
     def add(self, conn):
         cursor = conn.cursor()
         cursor.execute("INSERT INTO helpers (name,code,status,nationality,medical,staff_id) VALUES(%s,%s,%s,%s,%s,%s)",
-                       (self.name, self.code, self.status, self.nationality, self.medical, self.staffId))
+                       (self.name, self.code, self.status, self.nationality, self.medical, self.staff_id))
         conn.commit()
         cursor.close()
 
@@ -66,9 +66,9 @@ class Helper:
             if key == "id":
                 continue
             if value is not "":
-                update = update + key + "=%s,"  
+                update = update + key + "=%s,"
                 arguments = arguments + (value,)
-        #remove comma
+        # remove comma
         update = update[:-1] + " WHERE id=%s"
         arguments = arguments + (self.id,)
         cursor.execute(update, arguments)
@@ -81,15 +81,15 @@ class Helper:
         row = cursor.fetchone()
         if row is None:
             return None
-        
+
         id, name, code, dob, arrival_Date, flight_No, status, nationality, fin, medical, staff_id, created_at, updated_at = row
         newHelper = Helper(name,
-                       code,
-                       status,
-                       nationality,
-                       medical,
-                       staff_id,
-                       )
+                           code,
+                           status,
+                           nationality,
+                           medical,
+                           staff_id,
+                           )
         newHelper.id = id
         newHelper.date_of_birth = dob
         newHelper.arrival_date = arrival_Date

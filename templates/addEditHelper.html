@@ -23,30 +23,40 @@
       {% if helper is not none %}
       <label for="id">ID:</label><br>
       <input type="text" id="id" name="id" value={{helper.id}} readonly><br>
+      {% else %}
+      <label for="id">ID:</label><br>
+      <input type="text" id="id" name="id" value="NA" readonly><br>
       {% endif %}
       <label for="name">Name:</label><br>
-      <input type="text" id="name" name="name" value="{% if helper is not none %}{{helper.name}}{% else %}{% endif %}"><br>
+      <input type="text" id="name" name="name"
+        value="{% if helper is not none %}{{helper.name}}{% else %}{% endif %}"><br>
       <label for="code">Code:</label><br>
-      <input type="text" id="code" name="code" value="{% if helper is not none %}{{helper.code}}{% else %}{% endif %}"><br>
+      <input type="text" id="code" name="code"
+        value="{% if helper is not none %}{{helper.code}}{% else %}{% endif %}"><br>
       <label for="status">Status:</label><br>
-      <input type="text" id="status" name="status" value="{% if helper is not none %}{{helper.status}}{% else %}{% endif %}"><br>
+      <input type="text" id="status" name="status"
+        value="{% if helper is not none %}{{helper.status}}{% else %}{% endif %}"><br>
       <label for="nationality">Nationality:</label><br>
-      <input type="text" id="nationality" name="nationality" value="{% if helper is not none %}{{helper.nationality}}{% else %}{% endif %}"><br>
+      <input type="text" id="nationality" name="nationality"
+        value="{% if helper is not none %}{{helper.nationality}}{% else %}{% endif %}"><br>
       <label for="medical">Medical:</label><br>
-      <input type="text" id="medical" name="medical" value="{% if helper is not none %}{{helper.medical}}{% else %}{% endif %}"><br>
+      <input type="text" id="medical" name="medical"
+        value="{% if helper is not none %}{{helper.medical}}{% else %}{% endif %}"><br>
       <label for="staff_Id">Staff_Id:</label><br>
-      <input type="number" id="staff_Id" name="staff_Id" value="{% if helper is not none %}{{helper.staff_id}}{% else %}{% endif %}"><br>
-      {% if helper is not none %}
+      <input type="number" id="staff_Id" name="staff_Id"
+        value="{% if helper is not none %}{{helper.staff_id}}{% else %}{% endif %}"><br>
       <label for="dob">Date Of Birth:</label><br>
-      <input type="date" id="dob" name="dob" value="{% if helper is not none %}{{helper.date_of_birth}}{% else %}{% endif %}"><br>
+      <input type="date" id="dob" name="dob"
+        value="{% if helper is not none %}{{helper.date_of_birth}}{% else %}{% endif %}"><br>
       <label for="arrivalDate">Arrival Date:</label><br>
-      <input type="datetime-local" id="arrivalDate" name="arrivalDate" value="{% if helper is not none %}{{helper.arrival_date}}{% else %}{% endif %}"><br>
+      <input type="datetime-local" id="arrivalDate" name="arrivalDate"
+        value="{% if helper is not none %}{{helper.arrival_date}}{% else %}{% endif %}"><br>
       <label for="flightNo">Flight Number:</label><br>
-      <input type="text" id="flightNo" name="flightNo" value="{% if helper is not none %}{{helper.flight_no}}{% else %}{% endif %}"><br>
+      <input type="text" id="flightNo" name="flightNo"
+        value="{% if helper is not none %}{{helper.flight_no}}{% else %}{% endif %}"><br>
       <label for="fin">FIN:</label><br>
       <input type="text" id="fin" name="fin" value="{% if helper is not none %}{{helper.fin}}{% else %}{% endif %}"><br>
       <br>
-      {% endif %}
       {% if helper is none %}
       <input type="submit" value="Add">
       {% else %}
