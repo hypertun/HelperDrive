@@ -106,11 +106,11 @@ def addEditHelper(conn, id, name, code, status, nationality, medical, staffId, d
     newHelper.fin = fin
     if id is None:
         newHelper.add(conn)
-        flash('New Helper Added!')
+        flash('New Helper Added!','info')
     else:
         newHelper.id = id
         newHelper.edit(conn)
-        flash('Helper Edited!')
+        flash('Helper Edited!','info')
     return newHelper
 
 
@@ -125,27 +125,27 @@ def validationForAdd(request):
     error = False
     name = request.form["name"]
     if not name:
-        flash('Name is required!')
+        flash('Name is required!','error')
         error = True
     code = request.form["code"]
     if not code:
-        flash('Code is required!')
+        flash('Code is required!','error')
         error = True
     status = request.form["status"].casefold()
     if not status or (status != "fresh" and status != "transfer"):
-        flash('Status is required as fresh/transfer!')
+        flash('Status is required as fresh/transfer!','error')
         error = True
     nationality = request.form["nationality"].casefold()
     if not nationality or (nationality != "indonesia" and nationality != "myanmar" and nationality != "philippines"):
-        flash('Nationality is required as Indonesia/Myanmar/Philippines!')
+        flash('Nationality is required as Indonesia/Myanmar/Philippines!','error')
         error = True
     medical = request.form["medical"].casefold()
     if not medical or (medical != "pass" and medical != "fail"):
-        flash('Medical is required as pass/fail!')
+        flash('Medical is required as pass/fail!','error')
         error = True
     staffId = request.form["staff_Id"]
     if not code:
-        flash('StaffId is required!')
+        flash('StaffId is required!','error')
         error = True
 
     return name, code, status, nationality, medical, staffId, error

@@ -15,11 +15,26 @@ table tbody tr:hover {
     text-align: center;
 }
 
-.alert {
-    padding: 20px;
-    margin: 5px;
-    color: #970020;
-    background-color: #ffd5de;
+.box {
+  width: 400px;
+  height: 20px;
+  border: 2px solid #000;
+  margin: 0 auto 15px;
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.info {
+  background-color: #ddd;
+  border-color: #aaa; 
+}
+
+.error {
+  background-color: #EBB1B1;
+  border-color: #973939;
+  color: #973939;
 }
 
 /* Add a black background color to the top navigation */

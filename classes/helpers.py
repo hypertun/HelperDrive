@@ -65,7 +65,7 @@ class Helper:
         for key, value in self.__dict__.items():
             if key == "id":
                 continue
-            if value is not "":
+            if value != "":
                 update = update + key + "=%s,"
                 arguments = arguments + (value,)
         # remove comma

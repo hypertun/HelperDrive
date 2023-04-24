@@ -11,13 +11,6 @@
 </head>
 
 <body>
-  <div class="content">
-    {% for message in get_flashed_messages() %}
-    <div class="alert">{{ message }}</div>
-    {% endfor %}
-    {% block content %} {% endblock %}
-  </div>
-
   <div class="container">
     <form action="/addEditHelper" method="post">
       {% if helper is not none %}
@@ -65,3 +58,10 @@
     </form>
   </div>
 </body>
+
+<div class="content">
+  {% for category, message in get_flashed_messages(with_categories=true) %}
+  <div class="{{category}} box">{{ message }}</div>
+  {% endfor %}
+  {% block content %} {% endblock %}
+</div>
