@@ -36,7 +36,7 @@ app.config['MYSQL_DATABASE_USER'] = 'webadmin'
 app.config['MYSQL_DATABASE_PASSWORD'] = os.environ.get(
     'MYSQL_DATABASE_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = 'helper_drive'
-app.config['MYSQL_DATABASE_HOST'] = '116.86.63.183'
+app.config['MYSQL_DATABASE_HOST'] = 'helperdrive.tk'
 app.config['SECRET_KEY'] = os.urandom(24)
 mysql.init_app(app)
 
