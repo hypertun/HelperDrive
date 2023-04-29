@@ -26,26 +26,18 @@ from datetime import datetime
 from pydoc import Helper
 from flask import Flask, render_template, request, flash, url_for
 from flaskext.mysql import MySQL
-from classes import helpers
-from classes.helpers import Helper
+from classes.helpers import Helpers
+from classes import db
 import os
 
 app = Flask(__name__)
-mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'webadmin'
-app.config['MYSQL_DATABASE_PASSWORD'] = os.environ.get(
-    'MYSQL_DATABASE_PASSWORD')
-app.config['MYSQL_DATABASE_DB'] = 'helper_drive'
-app.config['MYSQL_DATABASE_HOST'] = 'helperdrive.tk'
+app.config.from_object('config.Config')
 app.config['SECRET_KEY'] = os.urandom(24)
-mysql.init_app(app)
-
+db.init_app(app)
 
 @app.route("/")
 def index():
-    conn = mysql.connect()
-    data = helpers.getAllHelpers(conn)
-    conn.close()
+    data = Helpers.query.all()
     return render_template('helpers.html', listOfHelpers=data, pages=generate_page_list())
 
 
@@ -56,27 +48,20 @@ def addEditHelper(id):
         if id is None:
             return render_template("addEditHelper.html", pages=generate_page_list(), helper=None)
         else:
-            conn = mysql.connect()
-            helper = Helper("", "", "", "", "", "")
-            helper.id = id
-            fullDetails = helper.get(conn)
-            conn.close()
+            fullDetails = Helpers.query.get(id)
             return render_template("addEditHelper.html", pages=generate_page_list(), helper=fullDetails)
     elif request.method == "POST":
-        conn = mysql.connect()
         name, code, status, nationality, medical, staffId, err = validationForAdd(
             request)
         id, dob, arrivalDate, flightNo, fin = validationForUpdate(request)
         if not err:
             if id == "NA":
-                helper = addEditHelper(conn, None, name, code, status, nationality, medical,
+                helper = addEditHelper(None, name, code, status, nationality, medical,
                                        staffId, dob, arrivalDate, flightNo, fin)
             else:
-                helper = addEditHelper(conn, id, name, code, status, nationality, medical,
+                helper = addEditHelper(id, name, code, status, nationality, medical,
                                        staffId, dob, arrivalDate, flightNo, fin)
-                conn.close()
                 return render_template("addEditHelper.html", pages=generate_page_list(), helper=helper)
-        conn.close()
         return render_template("addEditHelper.html", pages=generate_page_list(), helper=None)
         
 
@@ -86,10 +71,8 @@ def delHelper():
     if request.method == "GET":
         return render_template("delHelper.html", pages=generate_page_list())
     elif request.method == "POST":
-        conn = mysql.connect()
         id = request.form["id"]
-        delHelper(conn, id)
-        conn.close()
+        delHelper(id)
         return render_template("delHelper.html", pages=generate_page_list())
 
 
@@ -97,28 +80,28 @@ def create_app():
     return app
 
 
-def addEditHelper(conn, id, name, code, status, nationality, medical, staffId, dob, arrivalDate, flightNo, fin):
-    newHelper = Helper(name=name, code=code, status=status,
+def addEditHelper(id, name, code, status, nationality, medical, staffId, dob, arrivalDate, flightNo, fin):
+    newHelper = Helpers(name=name, code=code, status=status,
                        nationality=nationality, medical=medical, staff_Id=staffId)
     newHelper.date_of_birth = dob
     newHelper.arrival_date = arrivalDate
     newHelper.flight_no = flightNo
     newHelper.fin = fin
     if id is None:
-        newHelper.add(conn)
+        newHelper.add()
         flash('New Helper Added!','info')
     else:
         newHelper.id = id
-        newHelper.edit(conn)
+        newHelper.edit()
         flash('Helper Edited!','info')
     return newHelper
 
 
-def delHelper(conn, id):
-    newHelper = Helper(name="", code="", status="",
+def delHelper(id):
+    newHelper = Helpers(name="", code="", status="",
                        nationality="", medical="", staff_Id=1)
     newHelper.id = id
-    newHelper.delete(conn)
+    newHelper.delete()
 
 
 def validationForAdd(request):
@@ -144,7 +127,7 @@ def validationForAdd(request):
         flash('Medical is required as pass/fail!','error')
         error = True
     staffId = request.form["staff_Id"]
-    if not code:
+    if not staffId:
         flash('StaffId is required!','error')
         error = True
 
