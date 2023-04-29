@@ -25,7 +25,6 @@
 from datetime import datetime
 from pydoc import Helper
 from flask import Flask, render_template, request, flash, url_for
-from flaskext.mysql import MySQL
 from classes.helpers import Helpers
 from classes import db
 import os
